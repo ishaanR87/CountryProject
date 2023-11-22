@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const retrieveCountryInfo = async (countryName) => {
-  // Check if countryName is provided and not an empty string
+  // check if countryName is provided and not an empty string
   if (!countryName || countryName.trim() === "") {
     throw new Error("Country name is required");
   }
@@ -22,15 +22,18 @@ const retrieveCountryInfo = async (countryName) => {
         population: response.data[0]?.population,
         region: response.data[0]?.region,
       };
+
       return countryInfo;
     } else {
-      throw new Error("Country not Found");
+      // return which detail couldn't be retrieved
+      return {
+        name: "Unknown",
+        capital: "Unknown",
+        population: "Unknown",
+        region: "Unknown",
+      };
     }
   } catch (error) {
-    console.error(
-      `Error fetching country info for ${countryName}:`,
-      error.response?.data || error.message
-    );
     throw error;
   }
 };
