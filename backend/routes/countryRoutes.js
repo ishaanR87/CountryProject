@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const countryController = require("../services/countryService");
+const { fetchCountryInfo } = require("../controller/countryController");
 
-router.get("/:countryName", countryController.getCountryInfo);
+router.get("/:countryName", fetchCountryInfo);
 
 module.exports = router;

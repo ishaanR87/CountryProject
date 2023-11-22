@@ -1,7 +1,6 @@
 const axios = require("axios");
-const { count } = require("console");
 
-exports.getCountryInfo = async (countryName) => {
+const retrieveCountryInfo = async (countryName) => {
   try {
     const api = `https://restcountries.com/v3.1/name/${countryName}`;
     const response = await axios.get(api);
@@ -25,3 +24,5 @@ exports.getCountryInfo = async (countryName) => {
     throw new Error("Failed to fetch Country info..");
   }
 };
+
+module.exports = { retrieveCountryInfo };
