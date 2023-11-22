@@ -1,11 +1,18 @@
 const countryService = require("../services/countryService");
 
-exports.returnCountryInfo = async (req, res) => {
+exports.getCountryInfo = async (req, res) => {
   try {
-    const { name } = req.params;
-    const countryInfo = await countryService.getCountryInfo.name;
-    res.json(countryInfo);
+    const { countryName } = req.params;
+    const countryInfo = await countryService.getCountryInfo(countryName);
+
+    if (!countryInfo) {
+      res.status(404).json({ message: `Country not found` });
+      return;
+    }
+
+    res.status(200).json(countryInfo);
   } catch (error) {
-    res.status(500).json({ error: "Service Error..." });
+    console.error("Error fetching country info:" + error.message);
+    res.status(500).json({ message: "Server error" });
   }
 };
