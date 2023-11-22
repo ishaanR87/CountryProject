@@ -3,7 +3,15 @@ const countryService = require("../services/countryService");
 const fetchCountryInfo = async (req, res) => {
   try {
     const { countryName } = req.params;
-    const countryInfo = await countryService.retrieveCountryInfo(countryName);
+
+    // Validate countryName using joi
+    const { error, value } = joi.string().required().validate(countryName);
+    if (error) {
+      res.status(400).json({ message: "Invalid countryName" });
+      return;
+    }
+
+    const countryInfo = await countryService.retrieveCountryInfo(value);
 
     if (!countryInfo) {
       res.status(404).json({ message: `Country not found` });
