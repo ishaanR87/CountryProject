@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import RequestCountry from "./components/RequestCountry.jsx";
+import RequestCountry from "./components/FindCountry.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RequestCountry />
+    <FindCountry />
   </React.StrictMode>
 );

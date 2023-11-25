@@ -1,4 +1,4 @@
-function RequestCountry() {
+function FindCountry() {
   return (
     <>
       <h1>Country Application</h1>
@@ -6,4 +6,4 @@ function RequestCountry() {
   );
 }
 
-export default RequestCountry;
+export default FindCountry;
