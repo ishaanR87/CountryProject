@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/App.css";
 import "bootstrap/dist/css/bootstrap.css";
+import axios from "axios";
 
 const App = () => {
   const [countryName, setCountryName] = useState("");
@@ -8,7 +9,24 @@ const App = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
+    try {
+      const getAPI = await axios.get(
+        `http://localhost:5001/country/${countryName}`
+      );
+      if (getAPI.status !== 200) {
+        throw new Error("Country not found");
+      }
+
+      setCountryInfo(getAPI.data);
+    } catch (error) {
+      console.log("Error fetching country information:", error.message);
+      setCountryInfo("null");
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setCountryName(e.target.value);
   };
 
   return (
@@ -23,6 +41,8 @@ const App = () => {
               placeholder="Search"
               aria-label="CountryName"
               aria-describedby="basic-addon2"
+              value={countryName}
+              onChange={handleInputChange}
             ></input>
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="submit">
