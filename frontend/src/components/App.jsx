@@ -14,14 +14,16 @@ const App = () => {
       const getAPI = await axios.get(
         `http://localhost:5001/country/${countryName}`
       );
+      console.log(getAPI);
+
       if (getAPI.status !== 200) {
         throw new Error("Country not found");
       }
 
       setCountryInfo(getAPI.data);
     } catch (error) {
-      console.log("Error fetching country information:", error.message);
-      setCountryInfo("null");
+      console.log("Error fetching country information:", error);
+      setCountryInfo(null);
     }
   };
 
@@ -60,13 +62,15 @@ const App = () => {
             </div>
           </div>
         </form>
-        <div class="data-load">
-          <div class="name"></div>
-          <div class="captial"></div>
-          <div class="population"></div>
-          <div class="region"></div>
-          <div class="description">Enter a Country.</div>
-        </div>
+        {countryInfo && (
+          <div class="data-load">
+            <div class="data">Name: {countryInfo.name}</div>
+            <div class="data">Capital: {countryInfo.capital}</div>
+            <div class="data">Population: {countryInfo.population}</div>
+            <div class="data">Region: {countryInfo.region}</div>
+          </div>
+        )}
+        <div class="description">Enter a Country.</div>
       </div>
     </div>
   );
