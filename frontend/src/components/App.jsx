@@ -6,9 +6,19 @@ import axios from "axios";
 const App = () => {
   const [countryName, setCountryName] = useState("");
   const [countryInfo, setCountryInfo] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    const trimmedCountryName = countryName.trim();
+    const lettersRegex = /^[a-zA-Z\s]*$/;
+
+    if (!trimmedCountryName || !lettersRegex.test(trimmedCountryName)) {
+      setErrorMessage("Please enter a valid country name.");
+      setCountryInfo(null);
+      return;
+    }
 
     try {
       const getAPI = await axios.get(
@@ -17,13 +27,15 @@ const App = () => {
       console.log(getAPI);
 
       if (getAPI.status !== 200) {
-        throw new Error("Country not found");
+        throw new Error("Internal Error: Could not fetch API");
       }
 
       setCountryInfo(getAPI.data);
+      setErrorMessage("");
     } catch (error) {
       console.log("Error fetching country information:", error);
       setCountryInfo(null);
+      setErrorMessage("Country not found, please try again.");
     }
   };
 
@@ -66,6 +78,7 @@ const App = () => {
             </div>
           </div>
         </form>
+        {errorMessage && <p>{errorMessage}</p>}
         {countryInfo && (
           <div className="data-load">
             <div className="data">

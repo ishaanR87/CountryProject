@@ -35,12 +35,10 @@ describe("retrieveCountryInfo", () => {
       region: "Europe",
     };
 
-    jest
-      .spyOn(axios, "get")
-      .mockResolvedValueOnce({
-        status: 200,
-        data: [{ ...expectedCountryInfo, name: { common: "Germany" } }],
-      });
+    jest.spyOn(axios, "get").mockResolvedValueOnce({
+      status: 200,
+      data: [{ ...expectedCountryInfo, name: { common: "Germany" } }],
+    });
 
     const result = await retrieveCountryInfo(countryName);
 
