@@ -1,32 +1,31 @@
 const axios = require("axios");
 
 const retrieveCountryInfo = async (countryName) => {
-  // check if countryName is provided and not an empty string
-  if (!countryName || countryName.trim() === "") {
+  if (typeof countryName !== "string" || countryName.trim() === "") {
     throw new Error("Country name is required");
   }
 
   try {
-    const api = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
+    const api = `https://restcountries.com/v3.1/name/${countryName.trim()}?fullText=true`;
     const response = await axios.get(api);
 
-    // if axios fails due to network etc.
     if (response.status !== 200) {
       throw new Error("Failed to retrieve country info");
     }
 
     if (response.data?.[0]) {
       const countryInfo = {
-        flag: response.data[0]?.flags.svg,
-        name: response.data[0]?.name?.common,
-        capital: response.data[0]?.capital,
+        name: response.data[0]?.name.common,
+        capital: Array.isArray(response.data[0]?.capital)
+          ? response.data[0]?.capital[0] // array
+          : response.data[0]?.capital, // string
         population: response.data[0]?.population,
         region: response.data[0]?.region,
+        flag: response.data[0]?.flags?.svg,
       };
 
       return countryInfo;
     } else {
-      // return which detail couldn't be retrieved
       return {
         name: "Unknown",
         capital: "Unknown",

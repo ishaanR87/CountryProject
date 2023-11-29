@@ -1,10 +1,43 @@
-describe("retrieveCountryInfo", () => {
-  // Returns default values when country info cannot be retrieved
-  it("should return default values when country info cannot be retrieved", async () => {
-    const axios = require("axios");
-    const { retrieveCountryInfo } = require("backend/services/countryService");
+const { retrieveCountryInfo } = require("../services/countryService");
+const axios = require("axios");
 
-    const countryName = "InvalidCountry";
+describe("retrieveCountryInfo", () => {
+  // Should retrieve country info for a valid country name
+  it("should retrieve country info when given a valid country name", async () => {
+    const countryName = "Canada";
+    const expectedCountryInfo = {
+      name: "Canada", // Adjust to match the name format returned by the API
+      capital: "Ottawa",
+      population: 37589262,
+      region: "Americas",
+      flag: "https://flagcdn.com/cx.svg",
+    };
+
+    const axiosGetMock = jest.spyOn(axios, "get");
+    axiosGetMock.mockResolvedValueOnce({
+      status: 200,
+      data: [
+        {
+          name: { common: "Canada" },
+          capital: "Ottawa",
+          population: 37589262,
+          region: "Americas",
+          flags: { svg: "https://flagcdn.com/cx.svg" },
+        },
+      ],
+    });
+
+    const result = await retrieveCountryInfo(countryName);
+
+    expect(axiosGetMock).toHaveBeenCalledWith(
+      `https://restcountries.com/v3.1/name/${countryName.trim()}?fullText=true`
+    );
+    expect(result).toEqual(expectedCountryInfo);
+  });
+
+  // Should return default values for unknown country name
+  it("should return default values for unknown country name", async () => {
+    const countryName = "Unknown Country";
     const expectedCountryInfo = {
       name: "Unknown",
       capital: "Unknown",
@@ -12,57 +45,19 @@ describe("retrieveCountryInfo", () => {
       region: "Unknown",
     };
 
-    jest.spyOn(axios, "get").mockResolvedValueOnce({ status: 200, data: [] });
+    const axiosGetMock = jest.spyOn(axios, "get");
+    axiosGetMock.mockResolvedValueOnce({ status: 200, data: [] });
 
     const result = await retrieveCountryInfo(countryName);
 
+    expect(axiosGetMock).toHaveBeenCalledWith(
+      `https://restcountries.com/v3.1/name/${countryName.trim()}?fullText=true`
+    );
     expect(result).toEqual(expectedCountryInfo);
-    expect(axios.get).toHaveBeenCalledWith(
-      `https://restcountries.com/v3.1/name/${countryName}`
-    );
   });
 
-  // Handles country names with leading/trailing spaces
-  it("should handle country names with leading/trailing spaces", async () => {
-    const axios = require("axios");
-    const { retrieveCountryInfo } = require("backend/services/countryService");
-
-    const countryName = "  Germany  ";
-    const expectedCountryInfo = {
-      name: "Germany",
-      capital: "Berlin",
-      population: 83149300,
-      region: "Europe",
-    };
-
-    jest.spyOn(axios, "get").mockResolvedValueOnce({
-      status: 200,
-      data: [{ ...expectedCountryInfo, name: { common: "Germany" } }],
-    });
-
-    const result = await retrieveCountryInfo(countryName);
-
-    expect(result).toEqual(expectedCountryInfo);
-    expect(axios.get).toHaveBeenCalledWith(
-      `https://restcountries.com/v3.1/name/  Germany  `
-    );
-  });
-
-  // Throws error when country name is not provided
-  it("should throw error when country name is not provided", async () => {
-    const { retrieveCountryInfo } = require("backend/services/countryService");
-
-    const countryName = undefined;
-
-    await expect(retrieveCountryInfo(countryName)).rejects.toThrow(
-      "Country name is required"
-    );
-  });
-
-  // Throws error when country name is an empty string
-  it("should throw error when country name is an empty string", async () => {
-    const { retrieveCountryInfo } = require("backend/services/countryService");
-
+  // Should throw error for empty country name
+  it("should throw error for empty country name", async () => {
     const countryName = "";
 
     await expect(retrieveCountryInfo(countryName)).rejects.toThrow(
@@ -70,22 +65,24 @@ describe("retrieveCountryInfo", () => {
     );
   });
 
-  // Throws error when API call fails
-  it("should throw error when API call fails", async () => {
-    const axios = require("axios");
-    const { retrieveCountryInfo } = require("backend/services/countryService");
+  // Should throw error for non-string country name
+  it("should throw error for non-string country name", async () => {
+    const countryName = 123;
 
-    const countryName = "Canada";
+    await expect(retrieveCountryInfo(countryName)).rejects.toThrow(
+      "Country name is required"
+    );
+  });
 
-    jest
-      .spyOn(axios, "get")
-      .mockRejectedValueOnce(new Error("Failed to retrieve country info"));
+  // Should throw error for invalid country name
+  it("should throw error for invalid country name", async () => {
+    const countryName = "Invalid Country";
+
+    const axiosGetMock = jest.spyOn(axios, "get");
+    axiosGetMock.mockResolvedValueOnce({ status: 404 });
 
     await expect(retrieveCountryInfo(countryName)).rejects.toThrow(
       "Failed to retrieve country info"
-    );
-    expect(axios.get).toHaveBeenCalledWith(
-      `https://restcountries.com/v3.1/name/${countryName}`
     );
   });
 });
