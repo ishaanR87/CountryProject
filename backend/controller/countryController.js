@@ -32,4 +32,4 @@ const fetchCountryInfo = async (req, res, next) => {
   }
 };
 
-module.exports = { fetchCountryInfo, validateCountryName };
+module.exports = { validateCountryName, fetchCountryInfo };

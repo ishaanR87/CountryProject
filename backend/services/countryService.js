@@ -7,7 +7,7 @@ const retrieveCountryInfo = async (countryName) => {
   }
 
   try {
-    const api = `https://restcountries.com/v3.1/name/${countryName}`;
+    const api = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
     const response = await axios.get(api);
 
     // if axios fails due to network etc.

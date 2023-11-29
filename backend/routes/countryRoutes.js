@@ -4,8 +4,8 @@ const countryController = require("../controller/countryController");
 
 router.get(
   "/:countryName",
-  countryController.fetchCountryInfo,
-  countryController.validateCountryName
+  countryController.validateCountryName,
+  countryController.fetchCountryInfo
 );
 
 module.exports = router;
