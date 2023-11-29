@@ -12,15 +12,15 @@ const fetchCountryInfo = async (req, res, next) => {
     }
 
     const countryInfo = await countryService.retrieveCountryInfo(countryName);
-    
+
     if (!countryInfo) {
       return res.status(404).json({ message: "Country not Found" });
     }
 
     return res.status(200).json(countryInfo);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
- 
+
 module.exports = { fetchCountryInfo };

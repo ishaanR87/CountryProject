@@ -17,6 +17,7 @@ const retrieveCountryInfo = async (countryName) => {
 
     if (response.data?.[0]) {
       const countryInfo = {
+        flag: response.data[0]?.flags.svg,
         name: response.data[0]?.name?.common,
         capital: response.data[0]?.capital,
         population: response.data[0]?.population,
