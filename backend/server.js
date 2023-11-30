@@ -4,7 +4,7 @@ const countryRoutes = require("./routes/countryRoutes");
 const cors = require("cors");
 
 // port Number
-const PORT = process.env.PORT || 5001;
+const PORT = 5001;
 
 // middleware
 app.use(express.json());
