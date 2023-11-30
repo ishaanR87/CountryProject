@@ -1,6 +1,6 @@
 # Description
 
-The Country Project is a web application that allows users to search for and retrieve information about different countries. It provides details such as the country's name, capital, population, and region.
+The Country Project is a web application that allows users to search for and retrieve information about different countries. It provides details such as the country's name, capital, population, and region. The API used in the application is REST Countries API. The link for this API is ***https://restcountries.com/v3.1/all***
 
 # Technologies Used
 
@@ -29,6 +29,10 @@ The Country Project is a web application that allows users to search for and ret
 ### Cypress
 
 [Cypress](https://www.cypress.io/) - Fast, easy, and reliable testing for anything that runs in a browser.
+
+### Postman
+
+[Postman](https://www.postman.com/) - A collaboration platform for API development that simplifies API workflow and offers various testing features.
 
 ## Validation Library
 
@@ -59,5 +63,14 @@ To run the project locally, here are the steps:
 
 ### Testing
 
-- For frontend tests: Navigate to the frontend directory and `npm cypress `
-- For backend tests: Navigate to the backend directory and `npm test `
+#### Frontend Testing with Cypress
+
+- To run frontend tests using Cypress, navigate to the frontend directory and execute: `npm run cypress`
+
+#### Backend Unit Testing with Jest
+
+- For backend tests, navigate to the backend directory and execute: `npm test`
+
+#### API Testing with Postman
+
+- Use Postman for manual API testing or automation of API workflows. Install PostMan extension on VSCode and make sure server is running. Click 'New HTTP Request' and test API. 
