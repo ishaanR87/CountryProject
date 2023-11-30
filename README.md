@@ -1,6 +1,6 @@
 # Description
 
-The Country Project is a web application that allows users to search for and retrieve information about different countries. It provides details such as the country's name, capital, population, and region. The API used in the application is REST Countries API. The link for this API is ***https://restcountries.com/v3.1/all***
+The Country Project is a web application that allows users to search for and retrieve information about different countries. It provides details such as the country's name, capital, population, and region. The API used in the application is REST Countries API. The link for this API is ***https://restcountries.com/v3.1/all*** Deployed Website Link (Render): https://country-project-frontend.onrender.com/ 
 
 # Technologies Used
 
