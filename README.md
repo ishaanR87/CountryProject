@@ -54,7 +54,7 @@ To run the project locally, here are the steps:
 1. Clone this repo onto your local computer: `git clone https://github.com/ishaanR87/CountryProject.git `
 2. cd into this directory using two different terminals: `cd wherever/wherever/CountryProject`
    ### Frontend
-3. Now using one terminal cd into the frontend folder and run this command which will install the latest version of vite and the necessary modules: `npm install vite@latest `
+3. Now using one terminal cd into the frontend folder and run this command which will install the necessary modules: `npm install`
 4. Now just run `npm run dev ` which will boot up the React page.
    ### Backend
 5. cd into backend folder and delete the **_packages-lock.json_** file.
