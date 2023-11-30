@@ -1,0 +1,5 @@
+services:
+  - name: frontend
+    env: node
+    buildCommand: npm run build
+    startCommand: npm run start
