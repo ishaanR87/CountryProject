@@ -22,7 +22,7 @@ const App = () => {
 
     try {
       const getAPI = await axios.get(
-        `http://localhost:5001/country/${countryName}`
+        `https://country-project-server.onrender.com/country/${countryName}`
       );
       console.log(getAPI);
 
